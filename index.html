@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .produto-detalhado {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .produto-detalhado img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .produto-detalhado h2 {
+            font-size: 2rem;
+            margin-top: 1rem;
+        }
+        .produto-detalhado p {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+        .produto-detalhado button {
+            background-color: #28a745;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .produto-detalhado button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="produto-detalhado">
+    <img src="https://via.placeholder.com/600" alt="Produto">
+    <h2>Produto 1</h2>
+    <p><strong>Descrição:</strong> Este é um produto de alta qualidade, ideal para quem busca praticidade e durabilidade. Feito com materiais resistentes e design inovador.</p>
+    <p><strong>Preço:</strong> R$ 49,90</p>
+    <button onclick="adicionarAoCarrinho('Produto 1', 49.90)">Adicionar ao Carrinho</button>
+</div>
+
+</body>
+</html>
+<div id="carrinho-container">
+    <h2>Carrinho de Compras</h2>
+    <div id="produtos-carrinho">
+        <!-- Aqui irão aparecer os produtos adicionados -->
+    </div>
+    <div id="total-carrinho">
+        <strong>Total: R$ <span id="total-preco">0,00</span></strong>
+    </div>
+    <button onclick="finalizarCompra()">Finalizar Compra</button>
+</div>
+
+<script>
+    let carrinho = [];
+
+    function adicionarAoCarrinho(nome, preco) {
+        carrinho.push({ nome, preco });
+        atualizarCarrinho();
+    }
+
+    function atualizarCarrinho() {
+        const carrinhoEl = document.getElementById('produtos-carrinho');
+        carrinhoEl.innerHTML = '';
+        let total = 0;
+        carrinho.forEach(item => {
+            carrinhoEl.innerHTML += `<div>${item.nome} - R$ ${item.preco.toFixed(2)}</div>`;
+            total += item.preco;
+        });
+
+        const totalEl = document.getElementById('total-preco');
+        totalEl.textContent = total.toFixed(2);
+    }
+
+    function finalizarCompra() {
+        alert('Compra finalizada! Obrigado pela sua compra.');
+        carrinho = [];
+        atualizarCarrinho();
+    }
+</script>
+<form id="form-checkout">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="endereco">Endereço:</label>
+    <textarea id="endereco" name="endereco" required></textarea>
+
+    <button type="submit">Finalizar Compra</button>
+</form>
+<input type="text" id="pesquisa" placeholder="Pesquisar produtos...">
+<select id="filtro-preco">
+    <option value="">Filtrar por preço</option>
+    <option value="baixo">Menor preço</option>
+    <option value="alto">Maior preço</option>
+</select>
